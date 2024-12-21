@@ -50,7 +50,7 @@ export const applyJob = async (req, res) => {
 export const getAppliedJobs = async (req, res) => {
   try {
     const userId = req.id;
-    const applications = await Application.find({ applicant: userId })
+    const application = await Application.find({ applicant: userId })
       .sort({ createdAt: -1 })
       .populate({
         path: "job",
@@ -60,7 +60,23 @@ export const getAppliedJobs = async (req, res) => {
           options: { sort: { createdAt: -1 } },
         },
       });
-  } catch (error) {}
+
+    if (!application) {
+      return res.status(404).json({
+        message: "No applications found.",
+        success: false,
+      });
+    }
+    return res.status(200).json({
+      application,
+      success: true,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Failed to get applied jobs.",
+      success: false,
+    });
+  }
 };
 export const getApplicants = async (req, res) => {
   try {
@@ -91,5 +107,34 @@ export const getApplicants = async (req, res) => {
 };
 export const updateStatus = async (req, res) => {
   try {
-  } catch (error) {}
+    const { status } = req.body;
+    const applicationId = req.params.id;
+    if (!status) {
+      return res.status(400).json({
+        message: "Status is required",
+        success: false,
+      });
+    }
+    // Find the application by applicant ID
+    const application = await Application.findOne({ _id: applicationId });
+    if (!application) {
+      return res.status(404).json({
+        message: "Application not found",
+        success: false,
+      });
+    }
+    application.status = status.toLowerCase();
+    await application.save();
+
+    return res.status(200).json({
+      message: "Status updated successfully",
+      success: true,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Failed to update status",
+      success: false,
+    });
+  }
 };
