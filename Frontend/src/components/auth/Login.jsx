@@ -12,6 +12,7 @@ import { USER_API_ENDPOINT } from "@/utils/constant";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "@/redux/authSlice";
 import { Loader2 } from "lucide-react";
+import { setUser } from "@/redux/userSlice";
 
 function Login() {
   const [input, setInput] = useState({
@@ -35,8 +36,11 @@ function Login() {
         },
         withCredentials: true,
       });
-      console.log(res.data);
+
       if (res.data.success) {
+        const { fullname } = res.data.user;
+        fullname;
+        dispatch(setUser(fullname));
         navigate("/");
         toast.success(res.data.message);
       }
@@ -112,10 +116,12 @@ function Login() {
             <Button className="w-full my-4 bg-[#f55d27]">
               <Loader2 className="animate-spin mr-2 h-4 w-4" />
             </Button>
-          ) : null}
-          <Button type="submit" className="w-full my-4 bg-[#f55d27]">
-            Login
-          </Button>
+          ) : (
+            <Button type="submit" className="w-full my-4 bg-[#f55d27]">
+              Login
+            </Button>
+          )}
+
           <span className="text-sm">
             Don't have an account?
             <Link to="/signup" className="text-blue-600">
