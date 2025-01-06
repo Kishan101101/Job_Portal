@@ -4,13 +4,14 @@ import { Button } from "./ui/button";
 import { Search } from "lucide-react";
 function HeroSection() {
   const { user } = useSelector((state) => state.user);
-  const { fullname } = user;
+
   return (
     <div className="text-center">
       <div className="flex flex-col gap-5 my-10">
         {user ? (
           <h1 className="text-4xl font-mono font-bold  ">
-            Hi,{fullname} <span className="animate-wave inline-block">👋</span>
+            Hi,{user.fullname}
+            <span className="animate-wave inline-block">👋</span>
           </h1>
         ) : (
           <div className=" mx-auto text-[#fd5417] px-4 py-2 rounded-full bg-gray-100 font-medium">
