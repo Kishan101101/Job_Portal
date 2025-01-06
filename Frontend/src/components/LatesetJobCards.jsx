@@ -1,6 +1,6 @@
 import React from "react";
 import { Badge } from "./ui/badge";
-import { MapPinIcon } from "@heroicons/react/24/solid";
+import { MapPinIcon } from "@heroicons/react/24/outline";
 
 function LatesetJobCards() {
   return (

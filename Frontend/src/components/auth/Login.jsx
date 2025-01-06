@@ -38,9 +38,7 @@ function Login() {
       });
 
       if (res.data.success) {
-        const { fullname } = res.data.user;
-        fullname;
-        dispatch(setUser(fullname));
+        dispatch(setUser(res.data.user));
         navigate("/");
         toast.success(res.data.message);
       }
