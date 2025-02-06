@@ -21,7 +21,7 @@ app.use(cookieParser());
 
 // CORS configuration
 const corsOptions = {
-  origin: "http://localhost:5173", // React dev server URL
+  origin: "https://job-portal-wj6i.onrender.com/",
   credentials: true,
 };
 app.use(cors(corsOptions));
