@@ -36,15 +36,11 @@ function AppliedJobTable() {
                 <TableCell>{item?.job?.company?.name}</TableCell>
                 <TableCell className="text-right">
                   {item?.status === "pending" ? (
-                    <Badge variant="outline">Pending..</Badge>
+                    <Badge>Pending..</Badge>
                   ) : item?.status === "accepted" ? (
-                    <Badge variant="outline" className="text-green-700">
-                      Accepted
-                    </Badge>
+                    <Badge className="bg-green-600">Accepted</Badge>
                   ) : (
-                    <Badge variant="outine" className="text-red-700">
-                      Rejected
-                    </Badge>
+                    <Badge className="bg-red-600">Rejected</Badge>
                   )}
                 </TableCell>
               </TableRow>

@@ -12,6 +12,7 @@ import CompanyCreate from "./components/admin/CompanyCreate";
 import CompanySetup from "./components/admin/CompanySetup";
 import JobCreate from "./components/admin/JobCreate";
 import Applicants from "./components/admin/Applicants";
+import ProtectedRoute from "./components/admin/ProtectedRoute";
 function App() {
   const router = createBrowserRouter([
     {
@@ -45,31 +46,52 @@ function App() {
     // For Recruiters
     {
       path: "/admin/companies",
-      element: <Companies />,
+      element: (
+        <ProtectedRoute>
+          <Companies />
+        </ProtectedRoute>
+      ),
     },
     {
       path: "/admin/jobs",
-      element: <AdminJobs />,
+      element: (
+        <ProtectedRoute>
+          <AdminJobs />
+        </ProtectedRoute>
+      ),
     },
     {
       path: "/admin/companies/create",
-      element: <CompanyCreate />,
+      element: (
+        <ProtectedRoute>
+          <CompanyCreate />
+        </ProtectedRoute>
+      ),
     },
     {
       path: "/admin/companies/:id",
-      element: <CompanySetup />,
+      element: (
+        <ProtectedRoute>
+          <CompanySetup />
+        </ProtectedRoute>
+      ),
     },
     {
       path: "/admin/job/create",
-      element: <JobCreate />,
+      element: (
+        <ProtectedRoute>
+          <JobCreate />
+        </ProtectedRoute>
+      ),
     },
-    {
-      path: "/admin/job/edit/:id",
-      element: <JobCreate />,
-    },
+
     {
       path: "/admin/jobs/:id/applicants",
-      element: <Applicants />,
+      element: (
+        <ProtectedRoute>
+          <Applicants />
+        </ProtectedRoute>
+      ),
     },
   ]);
 

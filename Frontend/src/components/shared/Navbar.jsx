@@ -30,9 +30,9 @@ const Navbar = () => {
   return (
     <div className="bg-white">
       <div className="flex items-center justify-between mx-auto max-w-7xl h-16">
-        <div>
-          <h1 className="text-2xl font-bold ">
-            Job<span className="text-[#265df5] ">Hunt</span>
+        <div className="cursor-pointer" onClick={() => navigate("/")}>
+          <h1 className="text-2xl font-bold">
+            Job<span className="text-[#265df5]">Hunt</span>
           </h1>
         </div>
         <div className="flex items-center gap-12">
@@ -78,7 +78,7 @@ const Navbar = () => {
                   <AvatarImage
                     src={
                       user?.profile?.profilePhoto ||
-                      "https://github.com/shadcn.png"
+                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSLU5_eUUGBfxfxRd4IquPiEwLbt4E_6RYMw&s"
                     }
                   />
                 </Avatar>
@@ -89,7 +89,7 @@ const Navbar = () => {
                     <AvatarImage
                       src={
                         user?.profile?.profilePhoto ||
-                        "https://github.com/shadcn.png"
+                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSLU5_eUUGBfxfxRd4IquPiEwLbt4E_6RYMw&s"
                       }
                     />
                   </Avatar>

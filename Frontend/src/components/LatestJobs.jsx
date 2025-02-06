@@ -3,11 +3,12 @@ import LatestJobCards from "./LatesetJobCards";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
+import { motion } from "framer-motion";
 
 function LatestJobs() {
   const { alljobs } = useSelector((state) => state.job);
   const [currentPage, setCurrentPage] = useState(1);
-  const jobsPerPage = 1; // Number of jobs per page
+  const jobsPerPage = 8; // Number of jobs per page
 
   // Calculate the range of jobs for the current page
   const startIndex = (currentPage - 1) * jobsPerPage;
@@ -30,10 +31,18 @@ function LatestJobs() {
       </h1>
       <div className="grid grid-cols-3 gap-4 my-5">
         {alljobs.length > 0 ? (
-          alljobs.slice(startIndex, endIndex).map((job) => (
-            <Link key={job._id} to={`/description/${job?._id}`}>
-              <LatestJobCards job={job} />
-            </Link>
+          alljobs.slice(startIndex, endIndex).map((job, index) => (
+            <motion.div
+              key={job._id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+            >
+              <Link to={`/description/${job?._id}`}>
+                <LatestJobCards job={job} />
+              </Link>
+            </motion.div>
           ))
         ) : (
           <span>No Job Found</span>
