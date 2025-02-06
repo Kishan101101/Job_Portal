@@ -28,7 +28,7 @@ export const postJob = async (req, res) => {
       !companyId
     ) {
       return res.status(400).json({
-        message: "Something is missing.",
+        message: "Somethin is missing.",
         success: false,
       });
     }
@@ -44,8 +44,8 @@ export const postJob = async (req, res) => {
       company: companyId,
       created_by: userId,
     });
-    return res.status(200).json({
-      message: "Job created successfully created!",
+    return res.status(201).json({
+      message: "New job created successfully.",
       job,
       success: true,
     });
@@ -124,5 +124,24 @@ export const getAllJobs = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+  }
+};
+export const deleteJob = async (req, res) => {
+  try {
+    const jobId = req.params.id;
+    const deletedJob = await Job.findByIdAndDelete(jobId);
+
+    if (!deletedJob) {
+      return res
+        .status(404)
+        .json({ message: "Job not found.", success: false });
+    }
+
+    return res
+      .status(200)
+      .json({ message: "Job deleted successfully.", success: true });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error.", success: false });
   }
 };

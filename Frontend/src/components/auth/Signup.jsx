@@ -163,6 +163,7 @@ function Signup() {
           {loading ? (
             <Button className="w-full my-4 bg-[#f55d27]">
               <Loader2 className="animate-spin mr-2 h-4 w-4" />
+              Please wait...
             </Button>
           ) : (
             <Button type="submit" className="w-full my-4 bg-[#f55d27]">

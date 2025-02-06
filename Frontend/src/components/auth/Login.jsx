@@ -23,7 +23,7 @@ function Login() {
   const changeInputHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
-  const { loading } = useSelector((state) => state.auth);
+  const { loading } = useSelector((store) => store.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const submitHandler = async (e) => {

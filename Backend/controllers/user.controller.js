@@ -1,6 +1,8 @@
 import { User } from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import getDataUri from "../utils/dataURI.js";
+import cloudinary from "../utils/cloudinary.js";
 // register controller
 export const register = async (req, res) => {
   try {
@@ -18,12 +20,28 @@ export const register = async (req, res) => {
         success: false,
       });
     }
+    //profile picture upload handler
+    const file = req.file;
+    if (file) {
+      const fileUri = getDataUri(file);
+      const cloudinaryResponse = await cloudinary.uploader.upload(
+        fileUri.content,
+        {
+          resource_type: "image",
+        }
+      );
+      var imageUrl = cloudinaryResponse.secure_url;
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await User.create({
       fullname,
       email,
       phoneNumber,
       password: hashedPassword,
+      profile: {
+        profilePhoto: imageUrl || "",
+      },
       role,
     });
     return res.status(201).json({
@@ -123,7 +141,7 @@ export const logout = async (req, res) => {
 export const updateProfile = async (req, res) => {
   try {
     const { fullname, email, phoneNumber, bio, skills } = req.body;
-    const file = req.file;
+
     const userId = req.id;
     let user = await User.findById(userId);
     if (!user) {
@@ -140,6 +158,24 @@ export const updateProfile = async (req, res) => {
     if (skills) {
       const skillArray = skills.split(",");
       user.profile.skills = skillArray;
+    }
+
+    // handling file upload
+    const file = req.file;
+    if (file) {
+      const fileUri = getDataUri(file);
+      const cloudinaryResponse = await cloudinary.uploader.upload(
+        fileUri.content
+      );
+      if (cloudinaryResponse) {
+        user.profile.resume = cloudinaryResponse.secure_url;
+        user.profile.resumeOriginalName = file.originalname;
+      } else {
+        return res.status(400).json({
+          message: "File upload failed",
+          success: false,
+        });
+      }
     }
 
     await user.save();

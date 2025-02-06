@@ -50,25 +50,27 @@ export const applyJob = async (req, res) => {
 export const getAppliedJobs = async (req, res) => {
   try {
     const userId = req.id;
-    const application = await Application.find({ applicant: userId })
+    const applications = await Application.find({ applicant: userId })
       .sort({ createdAt: -1 })
       .populate({
         path: "job",
-        options: { sort: { createdAt: -1 } },
         populate: {
           path: "company",
-          options: { sort: { createdAt: -1 } },
         },
       });
 
-    if (!application) {
+    // Filter out applications where job is null (i.e., deleted)
+    const filteredApplications = applications.filter((app) => app.job !== null);
+
+    if (filteredApplications.length === 0) {
       return res.status(404).json({
         message: "No applications found.",
         success: false,
       });
     }
+
     return res.status(200).json({
-      application,
+      application: filteredApplications,
       success: true,
     });
   } catch (error) {
@@ -78,6 +80,7 @@ export const getAppliedJobs = async (req, res) => {
     });
   }
 };
+
 export const getApplicants = async (req, res) => {
   try {
     const { id } = req.params;
@@ -108,6 +111,7 @@ export const getApplicants = async (req, res) => {
 export const updateStatus = async (req, res) => {
   try {
     const { status } = req.body;
+
     const applicationId = req.params.id;
     if (!status) {
       return res.status(400).json({
