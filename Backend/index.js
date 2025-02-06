@@ -31,6 +31,5 @@ app.use("/api/v1/company", companyRoute);
 app.use("/api/v1/application", applicationRoute);
 
 app.listen(PORT, () => {
-  console.log(`listening on port ${PORT}`);
   connectDB();
 });
