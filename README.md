@@ -54,12 +54,12 @@ PORT=5000
 ### 4️⃣ Start the Application
 #### Start Backend Server
 ```sh
- cd backend
+ cd Backend
  npm run start
 ```
 #### Start Frontend
 ```sh
- cd frontend
+ cd Frontend
  npm run dev
 ```
 
