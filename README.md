@@ -40,7 +40,7 @@
 ```
 #### Backend (Node.js, Express)
 ```sh
- cd backend
+ cd Backend
  npm install
 ```
 ### 3️⃣ Set Up Environment Variables
